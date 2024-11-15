@@ -1,18 +1,29 @@
 package repository
 
-import "database/sql"
+import (
+	"database/sql"
+	_ "embed"
+)
 
-//go:embed sql/get_lineup.sql
+//go:embed sql/query_all_clients.sql
 var queryAllClients string
+
+//go:embed sql/query_client_by_id.sql
+var queryClientById string
 
 func NewRepository(db *sql.DB) (*repository, error) {
 	queryAllClientsStmt, err := db.Prepare(queryAllClients)
 	if err != nil {
 		return nil, err
 	}
+	queryClientByIdStmt, err := db.Prepare(queryClientById)
+	if err != nil {
+		return nil, err
+	}
 	return &repository{
 		db:              db,
 		queryAllClients: queryAllClientsStmt,
+		queryClientById: queryClientByIdStmt,
 	}, nil
 
 }
@@ -20,4 +31,5 @@ func NewRepository(db *sql.DB) (*repository, error) {
 type repository struct {
 	db              *sql.DB
 	queryAllClients *sql.Stmt
+	queryClientById *sql.Stmt
 }

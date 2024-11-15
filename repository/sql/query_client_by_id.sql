@@ -6,4 +6,5 @@ email,
 age,
 birthday
 FROM
-cka.client;
+cka.client
+WHERE id=1$;
