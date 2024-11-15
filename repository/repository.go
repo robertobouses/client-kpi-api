@@ -1,8 +1,11 @@
 package repository
 
-import "database/sql"
+import (
+	"database/sql"
+	_ "embed"
+)
 
-//go:embed sql/get_lineup.sql
+//go:embed sql/query_all_clients.sql
 var queryAllClients string
 
 func NewRepository(db *sql.DB) (*repository, error) {
