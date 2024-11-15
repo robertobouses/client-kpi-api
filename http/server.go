@@ -38,6 +38,7 @@ func (s *Server) Run(port string) error {
 
 	client := s.engine.Group("/client")
 	client.GET("", s.client.GetClients)
+	client.GET("id", s.client.GetClientById)
 
 	log.Printf("running api at %s port\n", port)
 	return s.engine.Run(fmt.Sprintf(":%s", port))
