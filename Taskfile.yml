@@ -1,0 +1,33 @@
+version: '3'
+
+env:
+  DIR: "/c/Users/Roberto/Desktop/Workspace/client-kpi-api/migrations"
+  DEFAULT_POSTGRES_URI: "postgres://postgres:mysecretpassword@localhost:5432/postgres?sslmode=disable"
+  CLIENT_DB_POSTGRES_URI: "postgres://postgres:mysecretpassword@localhost:5432/client-kpi-api?sslmode=disable"
+
+tasks:
+  create-database:
+    cmds:
+      - |
+        docker exec -i postgres psql -U postgres -tc \
+        "SELECT 1 FROM pg_database WHERE datname = 'client-kpi-api';" \
+        | grep -q 1 || docker exec -i postgres psql -U postgres -c 'CREATE DATABASE "client-kpi-api";'
+    silent: true
+
+  migration-create:
+    cmds:
+      - docker run --rm -v ${DIR}:${DIR} --workdir="${DIR}" migrate/migrate create -ext sql {{.CLI_ARGS}}
+    vars:
+      DIR: "./migrations"
+
+  migration-up:
+    cmds:
+      - docker run --rm -v ${DIR}:${DIR} --workdir="${DIR}" --network host migrate/migrate -database ${CLIENT_DB_POSTGRES_URI} -source "file://${DIR}" up
+    vars:
+      DIR: "/c/Users/Roberto/Desktop/Workspace/client-kpi-api/migrations"
+
+  migration-down:
+    cmds:
+      - docker run --rm -v ${DIR}:${DIR} --workdir="${DIR}" --network host migrate/migrate -database ${CLIENT_DB_POSTGRES_URI} -source "file://${DIR}" down --all
+    vars:
+      DIR: "./migrations"
