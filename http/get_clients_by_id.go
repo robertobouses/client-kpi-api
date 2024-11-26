@@ -8,18 +8,18 @@ import (
 	"github.com/google/uuid"
 )
 
-func (h Handler) GetClientById(ctx *gin.Context) {
-	var request struct {
-		Id uuid.UUID `json:"id"`
-	}
-	if err := ctx.ShouldBindJSON(&request); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error en la solicitud. Asegúrate de enviar un JSON válido."})
+func (h Handler) GetClientsById(ctx *gin.Context) {
+	idParam := ctx.Param("id")
+
+	id, err := uuid.Parse(idParam)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "El ID proporcionado no es válido."})
 		return
 	}
 
-	client, err := h.app.ListClientById(request.Id)
+	client, err := h.app.ListClientById(id)
 	if err != nil {
-		ctx.JSON(nethttp.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Cliente no encontrado."})
 		return
 	}
 

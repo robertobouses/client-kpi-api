@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 type ClientRepository interface {
 	QueryAllClients() ([]Client, error)
 	QueryClientById(uuid.UUID) (Client, error)
+	InsertClients(req Client) error
 }
 
 func NewApp(clientRepository ClientRepository) AppService {

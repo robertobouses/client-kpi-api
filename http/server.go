@@ -36,9 +36,10 @@ func (s *Server) Run(port string) error {
 		c.AbortWithStatus(http.StatusOK)
 	})
 
-	client := s.engine.Group("/client")
+	client := s.engine.Group("/clients")
 	client.GET("", s.client.GetClients)
-	client.GET("id", s.client.GetClientById)
+	client.GET(":id", s.client.GetClientsById)
+	client.POST("", s.client.PostClients)
 
 	log.Printf("running api at %s port\n", port)
 	return s.engine.Run(fmt.Sprintf(":%s", port))

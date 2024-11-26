@@ -8,6 +8,7 @@ import (
 type App interface {
 	ListAllClients() ([]app.Client, error)
 	ListClientById(id uuid.UUID) (app.Client, error)
+	CreateClients(req app.Client) error
 }
 
 func NewHandler(app app.AppService) Handler {
