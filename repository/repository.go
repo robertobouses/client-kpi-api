@@ -14,6 +14,9 @@ var queryClientById string
 //go:embed sql/insert_clients.sql
 var insertClients string
 
+//go:embed sql/update_client_by_id.sql
+var updateClientById string
+
 func NewRepository(db *sql.DB) (*repository, error) {
 	queryAllClientsStmt, err := db.Prepare(queryAllClients)
 	if err != nil {
@@ -28,18 +31,24 @@ func NewRepository(db *sql.DB) (*repository, error) {
 	if err != nil {
 		return nil, err
 	}
+	updateClientByIdStmt, err := db.Prepare(updateClientById)
+	if err != nil {
+		return nil, err
+	}
 	return &repository{
-		db:              db,
-		queryAllClients: queryAllClientsStmt,
-		queryClientById: queryClientByIdStmt,
-		insertClients:   insertClientsStmt,
+		db:               db,
+		queryAllClients:  queryAllClientsStmt,
+		queryClientById:  queryClientByIdStmt,
+		insertClients:    insertClientsStmt,
+		updateClientById: updateClientByIdStmt,
 	}, nil
 
 }
 
 type repository struct {
-	db              *sql.DB
-	queryAllClients *sql.Stmt
-	queryClientById *sql.Stmt
-	insertClients   *sql.Stmt
+	db               *sql.DB
+	queryAllClients  *sql.Stmt
+	queryClientById  *sql.Stmt
+	insertClients    *sql.Stmt
+	updateClientById *sql.Stmt
 }
