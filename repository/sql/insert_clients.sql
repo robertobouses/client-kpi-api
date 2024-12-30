@@ -1,4 +1,4 @@
 INSERT into cka.clients
-(name, lastname, email, age, birthday)
+(name, last_name, email, age, birthday)
 VALUES
  ($1, $2, $3, $4, $5);

@@ -6,4 +6,4 @@ email,
 age,
 birthday
 FROM
-cka.client;
+cka.clients;

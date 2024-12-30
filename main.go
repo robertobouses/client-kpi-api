@@ -20,7 +20,7 @@ func main() {
 		Pass:     "mysecretpassword",
 		Host:     "localhost",
 		Port:     "5432",
-		Database: "easy_football_tycoon",
+		Database: "client-kpi-api",
 	})
 
 	if err != nil {

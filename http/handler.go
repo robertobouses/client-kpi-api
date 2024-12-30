@@ -11,6 +11,7 @@ type App interface {
 	ListClientById(id uuid.UUID) (app.Client, error)
 	CreateClients(req app.Client) error
 	UpdateClientById(ctx *gin.Context, id uuid.UUID, req app.UpdateClientRequest) error
+	DeleteClientsById(id uuid.UUID) error
 }
 
 func NewHandler(app app.AppService) Handler {
