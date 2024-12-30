@@ -10,6 +10,8 @@ type ClientRepository interface {
 	QueryClientById(uuid.UUID) (Client, error)
 	InsertClients(req Client) error
 	UpdateClientById(ctx *gin.Context, id uuid.UUID, req UpdateClientRequest) error
+	DeleteClientsById(id uuid.UUID) error
+	ClientExistsById(id uuid.UUID) (bool, error)
 }
 
 func NewApp(clientRepository ClientRepository) AppService {

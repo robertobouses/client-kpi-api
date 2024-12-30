@@ -20,7 +20,7 @@ type PostClientsRequest struct {
 func (h Handler) PostClients(c *gin.Context) {
 	var req PostClientsRequest
 
-	if err := c.BindJSON(req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		log.Printf("error parsing request: %v", err)
 		c.AbortWithStatus(http.StatusBadRequest)
 		return

@@ -10,7 +10,7 @@ import (
 
 type UpdateClientRequest struct {
 	Name     *string `json:"name"`
-	LastName *string `json:"lastname"`
+	LastName *string `json:"last_name"`
 	Email    *string `json:"email"`
 	Age      *int    `json:"age"`
 	Birthday *string `json:"birthday"`
