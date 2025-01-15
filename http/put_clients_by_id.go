@@ -36,11 +36,18 @@ func (h Handler) PutClientsById(c *gin.Context) {
 		Age:      req.Age,
 		Birthday: req.Birthday,
 	}
-	err = h.app.UpdateClientById(c, id, appReq)
+	message, err := h.app.UpdateClientById(c, id, appReq)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "No se pudo actualizar el cliente: " + err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Cliente actualizado exitosamente"})
+	if message != "" {
+		c.JSON(http.StatusOK, gin.H{
+			"message": message,
+			"cliente": "Cliente actualizado exitosamente",
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Cliente actualizado exitosamente"})
+	}
 }
