@@ -41,6 +41,7 @@ func (s *Server) Run(port string) error {
 	client.GET(":id", s.client.GetClientsById)
 	client.POST("", s.client.PostClients)
 	client.PUT(":id", s.client.PutClientsById)
+	client.GET("/kpi", s.client.GetClientsKPI)
 
 	log.Printf("running api at %s port\n", port)
 	return s.engine.Run(fmt.Sprintf(":%s", port))

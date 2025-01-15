@@ -21,7 +21,7 @@ func (r *repository) QueryClientById(id uuid.UUID) (app.Client, error) {
 		&client.Birthday,
 	); err != nil {
 		if err == sql.ErrNoRows {
-			log.Printf("No se encontró el jugador con clientid: %v", id)
+			log.Printf("No se encontró el cliente con clientid: %v", id)
 			return app.Client{}, nil
 		}
 		log.Printf("Error al escanear la fila: %v", err)

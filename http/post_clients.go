@@ -37,5 +37,5 @@ func (h Handler) PostClients(c *gin.Context) {
 		c.JSON(nethttp.StatusInternalServerError, gin.H{"error al llamar la app desde http": err.Error()})
 		return
 	}
-	c.JSON(nethttp.StatusOK, gin.H{"mensaje": "jugador insertado correctamente"})
+	c.JSON(nethttp.StatusOK, gin.H{"mensaje": "cliente insertado correctamente"})
 }
