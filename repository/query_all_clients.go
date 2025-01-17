@@ -24,6 +24,7 @@ func (r *repository) QueryAllClients() ([]app.Client, error) {
 			&client.Email,
 			&client.Age,
 			&client.Birthday,
+			&client.TelephoneNumber,
 		); err != nil {
 			log.Printf("Error al escanear las filas QueryAllClients: %v", err)
 			return nil, err

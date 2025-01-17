@@ -9,11 +9,12 @@ import (
 )
 
 type UpdateClientRequest struct {
-	Name     *string `json:"name"`
-	LastName *string `json:"last_name"`
-	Email    *string `json:"email"`
-	Age      *int    `json:"age"`
-	Birthday *string `json:"birthday"`
+	Name            *string `json:"name"`
+	LastName        *string `json:"last_name"`
+	Email           *string `json:"email"`
+	Age             *int    `json:"age"`
+	Birthday        *string `json:"birthday"`
+	TelephoneNumber *string `json:"telephone_number"`
 }
 
 func (h Handler) PutClientsById(c *gin.Context) {
@@ -30,11 +31,12 @@ func (h Handler) PutClientsById(c *gin.Context) {
 		return
 	}
 	appReq := app.UpdateClientRequest{
-		Name:     req.Name,
-		LastName: req.LastName,
-		Email:    req.Email,
-		Age:      req.Age,
-		Birthday: req.Birthday,
+		Name:            req.Name,
+		LastName:        req.LastName,
+		Email:           req.Email,
+		Age:             req.Age,
+		Birthday:        req.Birthday,
+		TelephoneNumber: req.TelephoneNumber,
 	}
 	message, err := h.app.UpdateClientById(c, id, appReq)
 	if err != nil {

@@ -9,11 +9,12 @@ import (
 )
 
 type UpdateClientRequest struct {
-	Name     *string
-	LastName *string
-	Email    *string
-	Age      *int
-	Birthday *string
+	Name            *string
+	LastName        *string
+	Email           *string
+	Age             *int
+	Birthday        *string
+	TelephoneNumber *string
 }
 
 func (a AppService) UpdateClientById(ctx *gin.Context, id uuid.UUID, req UpdateClientRequest) (string, error) {

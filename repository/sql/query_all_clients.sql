@@ -4,6 +4,7 @@ name,
 last_name,
 email,
 age,
-birthday
+birthday,
+telephone_number
 FROM
 cka.clients;
