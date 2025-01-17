@@ -19,6 +19,7 @@ func (r *repository) QueryClientById(id uuid.UUID) (app.Client, error) {
 		&client.Email,
 		&client.Age,
 		&client.Birthday,
+		&client.TelephoneNumber,
 	); err != nil {
 		if err == sql.ErrNoRows {
 			log.Printf("No se encontró el cliente con clientid: %v", id)

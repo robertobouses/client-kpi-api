@@ -14,6 +14,7 @@ func (r *repository) UpdateClientById(ctx *gin.Context, id uuid.UUID, req app.Up
 		req.Email,
 		req.Age,
 		req.Birthday,
+		req.TelephoneNumber,
 		id,
 	)
 	if err != nil {
