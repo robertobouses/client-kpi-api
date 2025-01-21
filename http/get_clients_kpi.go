@@ -21,10 +21,13 @@ func (h Handler) GetClientsKPI(ctx *gin.Context) {
 		return
 	}
 
-	averageAge, stdDevAge := h.app.CalculateClientsKPI(clients)
-
+	kpi, err := h.app.CalculateClientsKPI(clients)
+	if err != nil {
+		ctx.JSON(nethttp.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	ctx.JSON(nethttp.StatusOK, gin.H{
-		"average_age": averageAge,
-		"std_dev_age": stdDevAge,
+		"average_age": kpi.AverageAge,
+		"std_dev_age": kpi.StdDevAge,
 	})
 }
