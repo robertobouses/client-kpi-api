@@ -12,7 +12,7 @@ type App interface {
 	CreateClients(req app.Client) error
 	UpdateClientById(ctx *gin.Context, id uuid.UUID, req app.UpdateClientRequest) (string, error)
 	DeleteClientsById(id uuid.UUID) error
-	CalculateClientsKPI([]app.Client) (float64, float64)
+	CalculateClientsKPI([]app.Client) (app.KPI, error)
 }
 
 func NewHandler(app app.AppService) Handler {
