@@ -8,7 +8,8 @@ import (
 
 func (a AppService) CreateClients(req Client) error {
 
-	now := time.Now()
+	now := time.Now().UTC()
+
 	age := now.Year() - req.Birthday.Year()
 	if now.Month() < req.Birthday.Month() || (now.Month() == req.Birthday.Month() && now.Day() < req.Birthday.Day()) {
 		age--
