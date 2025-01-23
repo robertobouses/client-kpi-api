@@ -9,10 +9,6 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func (m *MockClientRepo) InsertClients(req app.Client) error {
-	args := m.Called(req)
-	return args.Error(0)
-}
 func TestCreateClients(t *testing.T) {
 	tests := []struct {
 		name          string
