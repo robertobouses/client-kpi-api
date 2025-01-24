@@ -30,10 +30,13 @@ func (m *MockClientRepo) QueryAllClients() ([]app.Client, error) {
 	args := m.Called()
 	return args.Get(0).([]app.Client), args.Error(1)
 }
-func (m *MockClientRepo) QueryClientById(id uuid.UUID) (app.Client, error) {
-	panic("not implemented")
-}
+
 func (m *MockClientRepo) UpdateClientById(ctx *gin.Context, id uuid.UUID, req app.UpdateClientRequest) error {
 	args := m.Called(ctx, id, req)
 	return args.Error(0)
+}
+
+func (m *MockClientRepo) QueryClientById(id uuid.UUID) (app.Client, error) {
+	args := m.Called(id)
+	return args.Get(0).(app.Client), args.Error(1)
 }
