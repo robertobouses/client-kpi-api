@@ -33,5 +33,6 @@ func (m *MockClientRepo) QueryClientById(id uuid.UUID) (app.Client, error) {
 	panic("not implemented")
 }
 func (m *MockClientRepo) UpdateClientById(ctx *gin.Context, id uuid.UUID, req app.UpdateClientRequest) error {
-	panic("not implemented")
+	args := m.Called(ctx, id, req)
+	return args.Error(0)
 }
