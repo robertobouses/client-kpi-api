@@ -1,7 +1,6 @@
 package app_test
 
 import (
-	"errors"
 	"testing"
 	"time"
 
@@ -52,10 +51,10 @@ func TestListAllClients(t *testing.T) {
 		{
 			name: "Error al listar clientes",
 			mockSetup: func() {
-				mockRepo.On("QueryAllClients").Return([]app.Client{}, errors.New("database error")).Once()
+				mockRepo.On("QueryAllClients").Return([]app.Client{}, app.ErrListClients).Once()
 			},
 			expectedResult: []app.Client{},
-			expectedError:  errors.New("database error"),
+			expectedError:  app.ErrListClients,
 		},
 	}
 

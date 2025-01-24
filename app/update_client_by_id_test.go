@@ -1,7 +1,6 @@
 package app_test
 
 import (
-	"errors"
 	"testing"
 	"time"
 
@@ -76,7 +75,7 @@ func TestUpdateClientById(t *testing.T) {
 				Name: new(string),
 			},
 			mockSetup: func() {
-				mockRepo.On("UpdateClientById", mock.Anything, id, mock.Anything).Return(errors.New("repository error")).Once()
+				mockRepo.On("UpdateClientById", mock.Anything, id, mock.Anything).Return(app.ErrRepoUpdateClient).Once()
 			},
 			expectedMsg:   "",
 			expectedError: "repository error",

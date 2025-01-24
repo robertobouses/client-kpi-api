@@ -1,7 +1,6 @@
 package app
 
 import (
-	"errors"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -23,14 +22,14 @@ func (a AppService) UpdateClientById(ctx *gin.Context, id uuid.UUID, req UpdateC
 
 	if req.Name == nil && req.LastName == nil && req.Email == nil && req.Age == nil && req.Birthday == nil {
 		message = "Sin datos para actualizar"
-		return message, errors.New("no hay datos para actualizar")
+		return message, ErrNoDataToUpdate
 	}
 
 	if req.Birthday != nil && req.Age != nil {
 		message = "Se ignoró la edad, ya que la fecha de nacimiento fue proporcionada."
 		birthday, err := time.Parse(time.RFC3339, *req.Birthday)
 		if err != nil {
-			return message, errors.New("formato de fecha de nacimiento inválido, use 'AAAA-MM-DDTHH:MM:SSZ'")
+			return message, ErrInvalidBirthdayFormat
 		}
 
 		calculatedAge := CalculateAge(birthday)
@@ -51,7 +50,7 @@ func (a AppService) UpdateClientById(ctx *gin.Context, id uuid.UUID, req UpdateC
 	if req.Birthday != nil && req.Age == nil {
 		birthday, err := time.Parse(time.RFC3339, *req.Birthday)
 		if err != nil {
-			return "", errors.New("formato de fecha de nacimiento inválido, use 'AAAA-MM-DDTHH:MM:SSZ'")
+			return "", ErrInvalidBirthdayFormat
 		}
 
 		calculatedAge := CalculateAge(birthday)

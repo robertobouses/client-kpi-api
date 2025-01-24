@@ -1,7 +1,6 @@
 package app_test
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/google/uuid"
@@ -41,7 +40,7 @@ func TestDeleteClientsById(t *testing.T) {
 			name:     "Error al comprobar existencia del cliente",
 			clientID: uuid.New(),
 			mockSetup: func(mockRepo *MockClientRepo) {
-				mockRepo.On("ClientExistsById", mock.Anything).Return(false, errors.New("error en la base de datos")).Once()
+				mockRepo.On("ClientExistsById", mock.Anything).Return(false, app.ErrClientNotFound).Once()
 			},
 			expectedError:  "error en la base de datos",
 			expectDeletion: false,
@@ -51,7 +50,7 @@ func TestDeleteClientsById(t *testing.T) {
 			clientID: uuid.New(),
 			mockSetup: func(mockRepo *MockClientRepo) {
 				mockRepo.On("ClientExistsById", mock.Anything).Return(true, nil).Once()
-				mockRepo.On("DeleteClientsById", mock.Anything).Return(errors.New("error al eliminar")).Once()
+				mockRepo.On("DeleteClientsById", mock.Anything).Return(app.ErrClientDeletion).Once()
 			},
 			expectedError:  "error al eliminar",
 			expectDeletion: true,

@@ -16,7 +16,7 @@ func (r *repository) InsertClients(req app.Client) error {
 		req.TelephoneNumber,
 	)
 	if err != nil {
-		log.Print("Error en PostSignings repo", err)
+		log.Print("Error en InsertClients repo", err)
 		return err
 	}
 	log.Println("Después de ejecutar la consulta preparada")

@@ -7,7 +7,7 @@ CREATE TABLE cka.clients (
     email VARCHAR(255) NOT NULL,
     age INT,
     birthday DATE,
-    telephone_number VARCHAR(255) NOT NULL,
+    telephone_number VARCHAR(15) NOT NULL UNIQUE,
 
 );
 
