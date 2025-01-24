@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"log"
 	"time"
 )
@@ -10,7 +11,7 @@ func (a AppService) CreateClients(req Client) error {
 	age := CalculateAge(req.Birthday)
 
 	if req.Age > 0 && req.Age != age {
-		return ErrInconsistentAge
+		return errors.New("la edad proporcionada no es coherente con la fecha de nacimiento")
 	}
 
 	req.Age = age
