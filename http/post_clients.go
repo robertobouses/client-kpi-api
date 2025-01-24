@@ -29,8 +29,8 @@ func (h Handler) PostClients(c *gin.Context) {
 		return
 	}
 
-	if req.Name == "" || req.LastName == "" || req.Email == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Name, LastName y Email son obligatorios"})
+	if req.Name == "" || req.LastName == "" || req.Email == "" || req.Birthday.IsZero() {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Name, LastName, Email y Fecha de nacimiento son obligatorios"})
 		return
 	}
 
