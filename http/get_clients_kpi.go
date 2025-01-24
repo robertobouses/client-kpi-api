@@ -1,9 +1,11 @@
 package http
 
 import (
+	"net/http"
 	nethttp "net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/robertobouses/client-kpi-api/app"
 )
 
 func (h Handler) GetClientsKPI(ctx *gin.Context) {
@@ -23,7 +25,7 @@ func (h Handler) GetClientsKPI(ctx *gin.Context) {
 
 	kpi, err := h.app.CalculateClientsKPI(clients)
 	if err != nil {
-		ctx.JSON(nethttp.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": app.ErrKpiCalculationFailed.Error()})
 		return
 	}
 	ctx.JSON(nethttp.StatusOK, gin.H{

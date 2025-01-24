@@ -1,8 +1,6 @@
 package app
 
 import (
-	"errors"
-
 	"github.com/google/uuid"
 )
 
@@ -12,7 +10,7 @@ func (a AppService) DeleteClientsById(id uuid.UUID) error {
 		return err
 	}
 	if !exists {
-		return errors.New("el cliente no existe")
+		return ErrClientNotFound
 	}
 
 	return a.clientRepo.DeleteClientsById(id)

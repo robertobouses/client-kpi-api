@@ -24,27 +24,27 @@ func (h Handler) PostClients(c *gin.Context) {
 
 	if err := c.BindJSON(&req); err != nil {
 		log.Printf("error parsing request: %v", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Formato de entrada inválido"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrInvalidRequestFormat})
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	if req.Name == "" || req.LastName == "" || req.Email == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Name, LastName y Email son obligatorios"})
+	if req.Name == "" || req.LastName == "" || req.Email == "" || req.Birthday.IsZero() {
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrMandatoryFieldsMissing})
 		return
 	}
 
 	if !isValidEmail(req.Email) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Formato de email inválido"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrInvalidEmailFormat})
 		return
 	}
 	if req.Birthday.After(time.Now()) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "La fecha de nacimiento no puede ser futura"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrFutureBirthdayNotAllowed})
 		return
 	}
 
 	if !isValidPhoneNumber(req.TelephoneNumber) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Número de teléfono inválido"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrInvalidPhoneNumber})
 		return
 	}
 	client := app.Client{
@@ -57,7 +57,7 @@ func (h Handler) PostClients(c *gin.Context) {
 	err := h.app.CreateClients(client)
 
 	if err != nil {
-		c.JSON(nethttp.StatusInternalServerError, gin.H{"error al llamar la app desde http": err.Error()})
+		c.JSON(nethttp.StatusInternalServerError, gin.H{"error": app.ErrAppCommunication})
 		return
 	}
 	c.JSON(nethttp.StatusOK, gin.H{"mensaje": "cliente insertado correctamente"})

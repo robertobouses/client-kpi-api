@@ -1,7 +1,6 @@
 package app_test
 
 import (
-	"errors"
 	"testing"
 	"time"
 
@@ -45,10 +44,10 @@ func TestListClientById(t *testing.T) {
 			name:    "Cliente no encontrado",
 			inputID: uuid.New(),
 			mockSetup: func() {
-				mockRepo.On("QueryClientById", mock.Anything).Return(app.Client{}, errors.New("Cliente no encontrado")).Once()
+				mockRepo.On("QueryClientById", mock.Anything).Return(app.Client{}, app.ErrClientNotFound).Once()
 			},
 			expectedResult: app.Client{},
-			expectedError:  errors.New("Cliente no encontrado"),
+			expectedError:  app.ErrClientNotFound,
 		},
 	}
 

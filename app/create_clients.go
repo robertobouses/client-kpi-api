@@ -8,12 +8,7 @@ import (
 
 func (a AppService) CreateClients(req Client) error {
 
-	now := time.Now().UTC()
-
-	age := now.Year() - req.Birthday.Year()
-	if now.Month() < req.Birthday.Month() || (now.Month() == req.Birthday.Month() && now.Day() < req.Birthday.Day()) {
-		age--
-	}
+	age := CalculateAge(req.Birthday)
 
 	if req.Age > 0 && req.Age != age {
 		return errors.New("la edad proporcionada no es coherente con la fecha de nacimiento")
@@ -29,4 +24,14 @@ func (a AppService) CreateClients(req Client) error {
 		return err
 	}
 	return nil
+}
+
+func CalculateAge(birthday time.Time) int {
+	now := time.Now().UTC()
+
+	age := now.Year() - birthday.Year()
+	if now.Month() < birthday.Month() || (now.Month() == birthday.Month() && now.Day() < birthday.Day()) {
+		age--
+	}
+	return age
 }
