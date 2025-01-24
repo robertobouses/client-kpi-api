@@ -21,13 +21,13 @@ func (h Handler) PutClientsById(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrInvalidID})
 		return
 	}
 
 	var req UpdateClientRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Error en los datos de entrada: " + err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": app.ErrInvalidRequestFormat.Error() + err.Error()})
 		return
 	}
 	appReq := app.UpdateClientRequest{
@@ -40,7 +40,8 @@ func (h Handler) PutClientsById(c *gin.Context) {
 	}
 	message, err := h.app.UpdateClientById(c, id, appReq)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "No se pudo actualizar el cliente: " + err.Error()})
+
+		c.JSON(http.StatusInternalServerError, gin.H{"error": app.ErrClientUpdate.Error() + ": " + err.Error()})
 		return
 	}
 
