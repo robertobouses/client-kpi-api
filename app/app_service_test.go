@@ -27,7 +27,8 @@ func (m *MockClientRepo) DeleteClientsById(id uuid.UUID) error {
 }
 
 func (m *MockClientRepo) QueryAllClients() ([]app.Client, error) {
-	panic("not implemented")
+	args := m.Called()
+	return args.Get(0).([]app.Client), args.Error(1)
 }
 func (m *MockClientRepo) QueryClientById(id uuid.UUID) (app.Client, error) {
 	panic("not implemented")
